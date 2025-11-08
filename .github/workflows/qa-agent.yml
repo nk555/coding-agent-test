@@ -1,0 +1,52 @@
+name: "QA Agent: Video Test"
+
+# This action runs on every Pull Request
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  video-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Get the PR code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Use your app's Node.js version
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm ci # 'ci' is faster and safer for CI/CD
+
+      # 4. Install Playwright (our QA tool)
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      # 5. Build the application
+      - name: Build app
+        run: npm run build
+
+      # 6. Run the app in the background
+      - name: Start app
+        run: npm run start & # The '&' is critical, it runs in background
+        env:
+          PORT: 3000 # Make sure the port is the same as in qa-test.js
+
+      # 7. Run our QA test script!
+      - name: Run Playwright QA Test
+        run: node qa-test.js
+
+      # 8. Upload the video as an "artifact"
+      - name: Upload Video Artifact
+        if: always() # Run this even if the test fails (to see failure)
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-video-recording
+          path: qa_video/ # The folder our script saved the video to
+          retention-days: 7 # Keep the video for 7 days
