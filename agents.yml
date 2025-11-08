@@ -1,0 +1,13 @@
+# A list of AI agents the orchestrator can use.
+# The '{prompt}' placeholder will be replaced by the -m argument.
+# The '{worktree_path}' placeholder gives the agent context.
+
+agents:
+  - name: "codex"
+    command: "codex exec -C {worktree_path} -- {prompt}"
+
+  - name: "claude"
+    command: "claude -p -- '{prompt}'"
+
+  - name: "cursor"
+    command: "cursor --apply-prompt '{prompt}' --repo-path '{worktree_path}'"

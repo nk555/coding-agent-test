@@ -1,0 +1,39 @@
+!/bin/bash
+
+# This is our mock-agent script.
+# It simulates an AI agent by creating a file based on the prompt.
+
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+# The prompt is the first argument
+PROMPT=$1
+
+if [ -z "$PROMPT" ]; then
+  echo "Error: No prompt provided to mock-agent."
+  exit 1
+fi
+
+echo "Mock Agent: Processing prompt -> '$PROMPT'"
+
+# Slug-ify the prompt to create a "feature" name
+# e.g., "Build me a login page" -> "build-login-page"
+FEATURE_NAME=$(echo "$PROMPT" | tr '[:upper:]' '[:lower:]' | tr -s ' ' '-' | sed 's/[^a-z0-9-]//g' | sed 's/^-//;s/-$//')
+FILENAME="src/mock_${FEATURE_NAME}.js"
+
+# Simulate work by creating a new file
+mkdir -p src
+echo "/*
+ * Mock AI Agent Output
+ * Prompt: $PROMPT
+ * File: $FILENAME
+ */
+function ${FEATURE_NAME//-/_}() {
+  console.log('This is a mock AI-generated function.');
+  return 'hello from ${FEATURE_NAME}';
+}
+" > "$FILENAME"
+
+echo "Mock Agent: Created file at $FILENAME"
+sleep 1 # Simulate some processing time
+echo "Mock Agent: Work complete."
