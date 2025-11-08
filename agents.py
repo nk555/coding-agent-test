@@ -10,8 +10,9 @@ from pathlib import Path
 import subprocess
 
 # --- Configuration ---
+SCRIPT_DIR = Path(__file__).resolve().parent
 WORKTREE_DIR = Path(".ob1_worktrees")
-AGENT_CONFIG_FILE = "agents.yml"
+AGENT_CONFIG_FILE = SCRIPT_DIR / "agents.yml"
 
 # --- Helper Functions ---
 
