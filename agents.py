@@ -109,8 +109,8 @@ async def setup_worktree(base_branch, agent_id, task_id):
             await run_command("git stash apply stash@{0}", worktree_path, agent_id)
             
             # If apply succeeds, drop the stash from the main repo.
-            print(f"   [{agent_id}] Stash applied successfully. Dropping from main repo.")
-            await run_command("git stash drop stash@{0}", Path.cwd(), agent_id)
+            #print(f"   [{agent_id}] Stash applied successfully. Dropping from main repo.")
+            #await run_command("git stash drop stash@{0}", Path.cwd(), agent_id)
         except Exception as e:
             print(f"   [{agent_id}] ❌ ERROR: Failed to apply stashed changes to the worktree.")
             print(f"   [{agent_id}] Your uncommitted changes have been preserved in the stash.")
@@ -178,14 +178,8 @@ async def cleanup_worktree(worktree_path, branch_name, agent_id):
     print(f"   [{agent_id}] Cleaning up worktree...")
     
     # Run from the main repo root
-    await run_command(f"git worktree remove -f {worktree_path}", Path.cwd(), agent_id, ignore_errors=True)
+    #await run_command(f"git worktree remove -f {worktree_path}", Path.cwd(), agent_id, ignore_errors=True)
     
-    # Optional: Delete the remote branch. 
-    # You might want to keep it until the PR is merged/closed.
-    # We also ignore errors here in case the branch was never pushed.
-    # await run_command(f"git push origin --delete {branch_name}", Path.cwd(), agent_id, ignore_errors=True)
-    # print(f"   [{agent_id}] Note: Remote branch '{branch_name}' was NOT deleted.")
-
 # --- Main Orchestrator ---
 
 async def run_agent_pipeline(agent_config, prompt, base_branch, task_id):
