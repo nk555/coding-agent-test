@@ -113,6 +113,10 @@ async def setup_worktree(base_branch, agent_id, task_id):
         Path.cwd(),
         agent_id
     )
+
+    # Explicitly set write permissions on the new worktree directory to be safe
+    print(f"   [{agent_id}] Ensuring worktree is writable...")
+    await run_command(f"chmod -R u+w {worktree_path}", Path.cwd(), agent_id)
     
     # If we stashed changes, apply them to the new worktree
     if has_changes:
