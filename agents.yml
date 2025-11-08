@@ -4,10 +4,10 @@
 
 agents:
   - name: "codex"
-    command: "codex exec -C {worktree_path} -- {prompt}"
+    command: "codex exec --full-auto -C {worktree_path} -- {prompt}"
 
   - name: "claude"
-    command: "claude -p -- '{prompt}'"
+    command: "claude -p -- {prompt}"
 
   - name: "cursor"
-    command: "cursor --apply-prompt '{prompt}' --repo-path '{worktree_path}'"
+    command: "cursor --apply-prompt {prompt} --repo-path {worktree_path}"
