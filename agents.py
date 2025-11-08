@@ -56,16 +56,29 @@ async def run_command(command, cwd, agent_id="System", ignore_errors=False):
 
     stdout, stderr = await proc.communicate()
 
+    decoded_stdout = stdout.decode().strip()
+    decoded_stderr = stderr.decode().strip()
+
+    # Always print the output for debugging purposes
+    if decoded_stdout:
+        print(f"   [{agent_id}] STDOUT:")
+        print(f"   -----------------")
+        print(decoded_stdout)
+        print(f"   -----------------")
+    if decoded_stderr:
+        print(f"   [{agent_id}] STDERR:")
+        print(f"   -----------------")
+        print(decoded_stderr)
+        print(f"   -----------------")
+
+
     if proc.returncode != 0 and not ignore_errors:
         print(f"   [{agent_id}] ❌ ERROR (code {proc.returncode})")
-        print(f"   [{agent_id}] STDOUT: {stdout.decode().strip()}")
-        print(f"   [{agent_id}] STDERR: {stderr.decode().strip()}")
         raise subprocess.CalledProcessError(proc.returncode, command, stdout, stderr)
     elif proc.returncode != 0 and ignore_errors:
         print(f"   [{agent_id}] ⚠️ Warning: Command failed (code {proc.returncode}), but errors are ignored.")
-        print(f"   [{agent_id}] STDERR: {stderr.decode().strip()}")
     
-    return stdout.decode().strip()
+    return decoded_stdout
 
 # --- Agent Pipeline Steps ---
 
