@@ -4,7 +4,7 @@
 
 agents:
   - name: "codex"
-    command: "codex exec -C {worktree_path} -- {prompt}"
+    command: "codex exec --full-auto -C {worktree_path} -- {prompt}"
 
   - name: "claude"
     command: "claude -p -- '{prompt}'"
