@@ -156,7 +156,7 @@ async def commit_and_push_changes(worktree_path, branch_name, prompt, agent_id):
     
     # Check if there are any changes
     try:
-        await run_command("git diff-index --quiet HEAD", worktree_path, agent_id)
+        await run_command("git diff-index --quiet HEAD --", worktree_path, agent_id)
         print(f"   [{agent_id}] No changes detected. Skipping PR.")
         return False  # No changes
     except subprocess.CalledProcessError:
