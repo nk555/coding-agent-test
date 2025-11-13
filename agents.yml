@@ -4,7 +4,7 @@
 
 agents:
   - name: "cursor"
-    command: "cursor --apply-prompt {prompt} --repo-path {worktree_path}"
+    command: "cursor-agent --apply-prompt {prompt} --repo-path {worktree_path}"
 
   - name: "codex"
     command: "codex exec -C {worktree_path} --full-auto -- {prompt}"
