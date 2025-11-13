@@ -3,9 +3,12 @@
 # The '{worktree_path}' placeholder gives the agent context.
 
 agents:
+  - name: "gemini"
+    command: "gemini -p {prompt}"
+
   - name: "codex"
     command: "codex exec -C {worktree_path} --full-auto -- {prompt}"
-    
+
   - name: "cursor"
     command: "cursor-agent chat {prompt}"
 
