@@ -3,11 +3,11 @@
 # The '{worktree_path}' placeholder gives the agent context.
 
 agents:
-  - name: "cursor"
-    command: "cursor-agent chat {prompt}"
-
   - name: "codex"
     command: "codex exec -C {worktree_path} --full-auto -- {prompt}"
+    
+  - name: "cursor"
+    command: "cursor-agent chat {prompt}"
 
   - name: "claude"
     command: "claude -p --permission-mode acceptEdits -- {prompt}"
