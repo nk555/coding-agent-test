@@ -4,7 +4,7 @@
 
 agents:
   - name: "gemini"
-    command: "gemini -p {prompt}"
+    command: "gemini -p {prompt} -y"
 
   - name: "codex"
     command: "codex exec -C {worktree_path} --full-auto -- {prompt}"
